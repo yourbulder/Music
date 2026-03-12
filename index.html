@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VocalWave • Listen • Sing • Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --primary: #7c3aed;
+        }
+        
+        .tail-container {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .music-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .music-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .wave {
+            animation: wave 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes wave {
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
+        }
+        
+        .player {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #7c3aed;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="tail-container bg-zinc-950 text-white overflow-x-hidden">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-lg border-b border-zinc-800">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-violet-600 rounded-2xl flex items-center justify-center text-2xl">🎤</div>
+                <span class="text-3xl font-bold tracking-tighter text-white">VocalWave</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="#discover" onclick="scrollToSection('discover')" class="nav-link text-zinc-300 hover:text-white">Discover</a>
+                <a href="#sing" onclick="scrollToSection('sing')" class="nav-link text-zinc-300 hover:text-white">Sing</a>
+                <a href="#artists" onclick="scrollToSection('artists')" class="nav-link text-zinc-300 hover:text-white">Artists</a>
+                <a href="#community" onclick="scrollToSection('community')" class="nav-link text-zinc-300 hover:text-white">Community</a>
+            </div>
+            
+            <div class="flex items-center gap-x-4">
+                <button onclick="showLoginModal()" 
+                        class="px-6 py-2.5 text-sm font-semibold border border-zinc-700 hover:border-violet-500 rounded-3xl transition-all">
+                    Log in
+                </button>
+                <button onclick="showSignupModal()" 
+                        class="px-6 py-2.5 text-sm font-semibold bg-violet-600 hover:bg-violet-700 rounded-3xl transition-all">
+                    Join Free
+                </button>
+                
+                <!-- Mobile Menu -->
+                <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-zinc-900 border-t border-zinc-800 py-4">
+            <div class="flex flex-col px-6 gap-y-4 text-lg">
+                <a href="#discover" onclick="scrollToSection('discover');toggleMobileMenu()" class="py-2">Discover Music</a>
+                <a href="#sing" onclick="scrollToSection('sing');toggleMobileMenu()" class="py-2">Start Singing</a>
+                <a href="#artists" onclick="scrollToSection('artists');toggleMobileMenu()" class="py-2">Featured Artists</a>
+                <a href="#community" onclick="scrollToSection('community');toggleMobileMenu()" class="py-2">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero-bg pt-24 pb-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-x-2 bg-zinc-900/70 backdrop-blur-md px-5 py-2 rounded-3xl text-sm">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    1.4M tracks • 87K singers live
+                </div>
+                
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                    Where listeners<br>become fans<br>and singers<br>become stars
+                </h1>
+                
+                <p class="text-xl text-zinc-400 max-w-md">
+                    Professional streaming for music lovers. Upload, record, and monetize your voice instantly.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="scrollToSection('discover')" 
+                            class="px-10 py-5 bg-white text-zinc-950 font-semibold text-lg rounded-3xl flex items-center gap-x-3 hover:scale-105 transition-all">
+                        <i class="fas fa-headphones"></i>
+                        Start Listening
+                    </button>
+                    <button onclick="scrollToSection('sing')" 
+                            class="px-10 py-5 border-2 border-white font-semibold text-lg rounded-3xl flex items-center gap-x-3 hover:bg-white hover:text-zinc-950 transition-all">
+                        <i class="fas fa-microphone"></i>
+                        Start Singing
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-x-8 text-sm">
+                    <div class="flex -space-x-3">
+                        <img src="https://picsum.photos/id/1011/48/48" alt="" class="w-8 h-8 rounded-2xl ring-2 ring-zinc-900 object-cover">
+                        <img src="https://picsum.photos/id/201/48/48" alt="" class="w-8 h-8 rounded-2xl ring-2 ring-zinc-900 object-cover">
+                        <img src="https://picsum.photos/id/301/48/48" alt="" class="w-8 h-8 rounded-2xl ring-2 ring-zinc-900 object-cover">
+                    </div>
+                    <div>
+                        <div class="text-emerald-400 font-semibold">4.98 ★★★★★</div>
+                        <div class="text-xs text-zinc-500">Trusted by 420,000+ creators</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hero Visual -->
+            <div class="relative">
+                <div class="bg-zinc-900/50 backdrop-blur-3xl p-6 rounded-3xl border border-zinc-700 shadow-2xl">
+                    <div class="bg-black rounded-2xl overflow-hidden">
+                        <!-- Fake Album Art -->
+                        <div class="relative h-80 bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="w-40 h-40 mx-auto bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center text-7xl mb-6 shadow-inner">🎵</div>
+                                <div class="text-white text-2xl font-semibold">Midnight Echo</div>
+                                <div class="text-white/70 text-sm">Aarav Singh • Pop • 2025</div>
+                            </div>
+                            
+                            <!-- Animated waves -->
+                            <div class="absolute bottom-8 left-1/2 flex gap-x-1">
+                                <div class="wave w-1.5 bg-white/80 rounded-full"></div>
+                                <div class="wave w-1.5 bg-white/80 rounded-full animation-delay-200"></div>
+                                <div class="wave w-1.5 bg-white/80 rounded-full animation-delay-400"></div>
+                                <div class="wave w-1.5 bg-white/80 rounded-full animation-delay-600"></div>
+                                <div class="wave w-1.5 bg-white/80 rounded-full animation-delay-800"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Floating badges -->
+                <div class="absolute -top-6 -left-6 bg-zinc-900 px-6 py-3 rounded-3xl shadow-xl flex items-center gap-x-3">
+                    <i class="fas fa-bolt text-amber-400"></i>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest">Live Now</div>
+                        <div class="font-semibold">12,459 listeners</div>
+                    </div>
+                </div>
+                
+                <div class="absolute -bottom-8 right-8 bg-zinc-900 px-8 py-6 rounded-3xl shadow-2xl">
+                    <div class="flex items-center gap-x-4">
+                        <div class="text-4xl">🎤</div>
+                        <div>
+                            <div class="font-medium">Singing live</div>
+                            <div class="text-emerald-400 text-sm">Neha Sharma • 2.3K watching</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center text-xs text-zinc-500">
+            <div class="animate-bounce">↓</div>
+            <span class="mt-1">Scroll for magic</span>
+        </div>
+    </header>
+
+    <!-- DISCOVER SECTION -->
+    <section id="discover" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <span class="px-4 py-1.5 bg-violet-500/10 text-violet-400 text-xs font-semibold rounded-3xl">FOR LISTENERS</span>
+                <h2 class="text-5xl font-bold tracking-tight mt-3">Discover what the world is playing</h2>
+            </div>
+            <a href="#" onclick="event.preventDefault(); alert('In a real app this would open the full library')" 
+               class="text-violet-400 hover:text-violet-300 flex items-center gap-x-2 text-sm font-medium">
+                Browse all <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <!-- Song Card 1 -->
+            <div class="music-card bg-zinc-900 rounded-3xl overflow-hidden group">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/1015/600/600" alt="Midnight Drive" 
+                         class="w-full h-56 object-cover">
+                    <div class="absolute top-4 right-4 bg-black/70 px-3 py-1 rounded-2xl text-xs flex items-center gap-x-1">
+                        <i class="fas fa-play"></i> 2.4M
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-lg group-hover:text-violet-300 transition-colors">Midnight Drive</div>
+                    <div class="text-zinc-400 text-sm">Aarav Singh • Indie Pop</div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <button onclick="playSong(0)" 
+                                class="w-11 h-11 bg-white text-zinc-950 rounded-2xl flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fas fa-play ml-0.5"></i>
+                        </button>
+                        <div class="text-xs text-zinc-500">3:42</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Song Card 2 -->
+            <div class="music-card bg-zinc-900 rounded-3xl overflow-hidden group">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/201/600/600" alt="Ocean Eyes" 
+                         class="w-full h-56 object-cover">
+                    <div class="absolute top-4 right-4 bg-black/70 px-3 py-1 rounded-2xl text-xs flex items-center gap-x-1">
+                        <i class="fas fa-play"></i> 984K
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-lg group-hover:text-violet-300 transition-colors">Ocean Eyes</div>
+                    <div class="text-zinc-400 text-sm">Neha Sharma • Acoustic</div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <button onclick="playSong(1)" 
+                                class="w-11 h-11 bg-white text-zinc-950 rounded-2xl flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fas fa-play ml-0.5"></i>
+                        </button>
+                        <div class="text-xs text-zinc-500">4:18</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Song Card 3 -->
+            <div class="music-card bg-zinc-900 rounded-3xl overflow-hidden group">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/301/600/600" alt="Firefly" 
+                         class="w-full h-56 object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-lg group-hover:text-violet-300 transition-colors">Firefly</div>
+                    <div class="text-zinc-400 text-sm">Rohan Patel • Electronic</div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <button onclick="playSong(2)" 
+                                class="w-11 h-11 bg-white text-zinc-950 rounded-2xl flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fas fa-play ml-0.5"></i>
+                        </button>
+                        <div class="text-xs text-zinc-500">2:59</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Song Card 4 -->
+            <div class="music-card bg-zinc-900 rounded-3xl overflow-hidden group">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/401/600/600" alt="Echoes" 
+                         class="w-full h-56 object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-lg group-hover:text-violet-300 transition-colors">Echoes</div>
+                    <div class="text-zinc-400 text-sm">Priya Kapoor • Bollywood Fusion</div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <button onclick="playSong(3)" 
+                                class="w-11 h-11 bg-white text-zinc-950 rounded-2xl flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fas fa-play ml-0.5"></i>
+                        </button>
+                        <div class="text-xs text-zinc-500">5:12</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Song Card 5 -->
+            <div class="music-card bg-zinc-900 rounded-3xl overflow-hidden group">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/501/600/600" alt="Rising" 
+                         class="w-full h-56 object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-lg group-hover:text-violet-300 transition-colors">Rising Sun</div>
+                    <div class="text-zinc-400 text-sm">Vikram Rao • Hip-Hop</div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <button onclick="playSong(4)" 
+                                class="w-11 h-11 bg-white text-zinc-950 rounded-2xl flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fas fa-play ml-0.5"></i>
+                        </button>
+                        <div class="text-xs text-zinc-500">3:27</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SING SECTION -->
+    <section id="sing" class="bg-zinc-900 py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-5">
+                    <span class="px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-3xl">FOR SINGERS</span>
+                    <h2 class="text-5xl font-bold tracking-tight mt-3 leading-none">Record. Upload.<br>Monetize.<br>Go viral.</h2>
+                    <ul class="mt-10 space-y-8">
+                        <li class="flex gap-x-6">
+                            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center flex-shrink-0">🎙️</div>
+                            <div>
+                                <div class="font-semibold text-xl">Instant studio recording</div>
+                                <div class="text-zinc-400">Professional reverb, auto-tune &amp; effects built-in. No extra software needed.</div>
+                            </div>
+                        </li>
+                        <li class="flex gap-x-6">
+                            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center flex-shrink-0">📈</div>
+                            <div>
+                                <div class="font-semibold text-xl">Royalty splits in seconds</div>
+                                <div class="text-zinc-400">Earn 85% on every stream. Get paid every Friday.</div>
+                            </div>
+                        </li>
+                        <li class="flex gap-x-6">
+                            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center flex-shrink-0">🌍</div>
+                            <div>
+                                <div class="font-semibold text-xl">Reach 1M+ listeners overnight</div>
+                                <div class="text-zinc-400">Featured playlists + AI promotion tools.</div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <button onclick="startRecordingDemo()" 
+                            class="mt-12 px-12 py-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xl rounded-3xl flex items-center gap-x-4 transition-all">
+                        <i class="fas fa-microphone-alt"></i>
+                        RECORD YOUR FIRST TRACK
+                    </button>
+                </div>
+                
+                <!-- Recording Studio Mock -->
+                <div class="md:col-span-7 bg-zinc-950 border border-zinc-800 rounded-3xl p-8">
+                    <div class="bg-black rounded-2xl p-8">
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="flex items-center gap-x-3">
+                                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">●</div>
+                                <div>
+                                    <div class="font-medium">Recording...</div>
+                                    <div class="text-xs text-zinc-500">00:47 / 03:20</div>
+                                </div>
+                            </div>
+                            <button onclick="fakeRecordStop()" 
+                                    class="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-3xl text-sm font-semibold">
+                                STOP
+                            </button>
+                        </div>
+                        
+                        <!-- Fake waveform -->
+                        <div class="h-40 flex items-end gap-x-1 justify-center mb-8">
+                            <div class="wave w-3 bg-violet-400 rounded-t"></div>
+                            <div class="wave w-3 bg-violet-400 rounded-t animation-delay-150"></div>
+                            <div class="wave w-3 bg-violet-400 rounded-t animation-delay-300"></div>
+                            <div class="wave w-3 bg-violet-400 rounded-t animation-delay-450"></div>
+                            <div class="wave w-3 bg-violet-400 rounded-t animation-delay-200"></div>
+                            <div class="wave w-3 bg-violet-400 rounded-t animation-delay-350"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <button onclick="alert('Auto-tune applied!')" 
+                                    class="py-4 bg-zinc-900 hover:bg-zinc-800 rounded-2xl text-sm font-medium">Auto-Tune</button>
+                            <button onclick="alert('Reverb added')" 
+                                    class="py-4 bg-zinc-900 hover:bg-zinc-800 rounded-2xl text-sm font-medium">Reverb</button>
+                            <button onclick="alert('Track uploaded to library')" 
+                                    class="py-4 bg-violet-600 hover:bg-violet-700 rounded-2xl text-sm font-medium">Upload to Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTISTS -->
+    <section id="artists" class="max-w-7xl mx-auto px-6 py-24">
+        <h2 class="text-5xl font-bold text-center mb-4">Featured Independent Artists</h2>
+        <p class="text-center text-zinc-400 max-w-md mx-auto mb-16">Real talent. Real earnings. All discovered on VocalWave.</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center group">
+                <div class="relative mx-auto w-48 h-48 mb-6">
+                    <img src="https://picsum.photos/id/64/400/400" alt="Aarav" 
+                         class="w-full h-full object-cover rounded-3xl ring-8 ring-violet-500/30 group-hover:ring-violet-500 transition-all">
+                    <div class="absolute bottom-4 right-4 bg-black px-4 py-1 text-xs rounded-3xl">2.8M plays</div>
+                </div>
+                <div class="font-semibold">Aarav Singh</div>
+                <div class="text-xs text-zinc-500">Delhi • Indie Pop</div>
+            </div>
+            
+            <div class="text-center group">
+                <div class="relative mx-auto w-48 h-48 mb-6">
+                    <img src="https://picsum.photos/id/201/400/400" alt="Neha" 
+                         class="w-full h-full object-cover rounded-3xl ring-8 ring-violet-500/30 group-hover:ring-violet-500 transition-all">
+                    <div class="absolute bottom-4 right-4 bg-black px-4 py-1 text-xs rounded-3xl">1.1M plays</div>
+                </div>
+                <div class="font-semibold">Neha Sharma</div>
+                <div class="text-xs text-zinc-500">Mumbai • Soul</div>
+            </div>
+            
+            <div class="text-center group">
+                <div class="relative mx-auto w-48 h-48 mb-6">
+                    <img src="https://picsum.photos/id/301/400/400" alt="Rohan" 
+                         class="w-full h-full object-cover rounded-3xl ring-8 ring-violet-500/30 group-hover:ring-violet-500 transition-all">
+                    <div class="absolute bottom-4 right-4 bg-black px-4 py-1 text-xs rounded-3xl">874K plays</div>
+                </div>
+                <div class="font-semibold">Rohan Patel</div>
+                <div class="text-xs text-zinc-500">Bangalore • EDM</div>
+            </div>
+            
+            <div class="text-center group">
+                <div class="relative mx-auto w-48 h-48 mb-6">
+                    <img src="https://picsum.photos/id/401/400/400" alt="Priya" 
+                         class="w-full h-full object-cover rounded-3xl ring-8 ring-violet-500/30 group-hover:ring-violet-500 transition-all">
+                    <div class="absolute bottom-4 right-4 bg-black px-4 py-1 text-xs rounded-3xl">3.2M plays</div>
+                </div>
+                <div class="font-semibold">Priya Kapoor</div>
+                <div class="text-xs text-zinc-500">Chennai • Fusion</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section id="community" class="py-24 bg-gradient-to-b from-zinc-950 to-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[3px] text-violet-400 font-medium">COMMUNITY • LIVE</span>
+                <h2 class="text-5xl font-bold mt-3">Join the conversation</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-900 rounded-3xl p-8">
+                    <div class="flex gap-x-4 mb-6">
+                        <img src="https://picsum.photos/id/1011/64/64" class="w-10 h-10 rounded-2xl">
+                        <div>
+                            <div class="font-medium">@sara_melody</div>
+                            <div class="text-xs text-zinc-500">just dropped her new single 🔥</div>
+                        </div>
+                    </div>
+                    <div class="text-zinc-300">"VocalWave gave me my first 10K streams in 48 hours. Best decision I ever made."</div>
+                    <div class="mt-8 text-xs text-emerald-400 flex items-center gap-x-2">
+                        <i class="fas fa-heart"></i> 2.4K likes
+                    </div>
+                </div>
+                
+                <div class="bg-zinc-900 rounded-3xl p-8">
+                    <div class="flex gap-x-4 mb-6">
+                        <img src="https://picsum.photos/id/201/64/64" class="w-10 h-10 rounded-2xl">
+                        <div>
+                            <div class="font-medium">@rahulbeats</div>
+                            <div class="text-xs text-zinc-500">live session in 15 min</div>
+                        </div>
+                    </div>
+                    <div class="text-zinc-300">"Just hit 50K monthly listeners. Thank you VocalWave team &amp; all my fans ❤️"</div>
+                    <div class="mt-8 text-xs text-emerald-400 flex items-center gap-x-2">
+                        <i class="fas fa-heart"></i> 1.9K likes
+                    </div>
+                </div>
+                
+                <div class="bg-zinc-900 rounded-3xl p-8 relative overflow-hidden">
+                    <div class="flex gap-x-4 mb-6">
+                        <img src="https://picsum.photos/id/301/64/64" class="w-10 h-10 rounded-2xl">
+                        <div>
+                            <div class="font-medium">@anika_sings</div>
+                            <div class="text-xs text-zinc-500">cover of the week</div>
+                        </div>
+                    </div>
+                    <div class="text-zinc-300">"The AI mastering tool is insane. My cover went viral on Instagram Reels!"</div>
+                    <div class="mt-8 text-xs text-emerald-400 flex items-center gap-x-2">
+                        <i class="fas fa-heart"></i> 3.1K likes
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 text-[180px] opacity-10">🎤</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL MUSIC PLAYER -->
+    <div id="globalPlayer" 
+         class="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-700 player z-50 hidden">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center gap-x-6">
+            <!-- Now Playing -->
+            <div class="flex items-center gap-x-4 w-72">
+                <img id="playerArt" src="https://picsum.photos/id/1015/80/80" 
+                     class="w-14 h-14 rounded-2xl object-cover">
+                <div>
+                    <div id="playerTitle" class="font-medium text-sm">Midnight Drive</div>
+                    <div id="playerArtist" class="text-xs text-zinc-400">Aarav Singh</div>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="flex-1 flex flex-col items-center gap-y-2">
+                <div class="flex items-center gap-x-6 text-lg">
+                    <i onclick="prevSong()" class="fas fa-step-backward cursor-pointer hover:text-violet-400"></i>
+                    <button onclick="togglePlay()" id="playBtn"
+                            class="w-10 h-10 bg-white text-black rounded-2xl flex items-center justify-center text-xl hover:scale-110">
+                        <i class="fas fa-play" id="playIcon"></i>
+                    </button>
+                    <i onclick="nextSong()" class="fas fa-step-forward cursor-pointer hover:text-violet-400"></i>
+                </div>
+                
+                <div class="w-full max-w-xs flex items-center gap-x-3 text-xs">
+                    <span id="currentTime">0:00</span>
+                    <input type="range" id="progressBar" 
+                           class="flex-1 accent-violet-500" min="0" max="100" value="0"
+                           oninput="updateProgress(this)">
+                    <span id="totalTime">3:42</span>
+                </div>
+            </div>
+            
+            <!-- Right side -->
+            <div class="flex items-center gap-x-8">
+                <i onclick="toggleLike()" class="fas fa-heart cursor-pointer text-xl hover:text-red-500"></i>
+                <i class="fas fa-volume-up cursor-pointer text-xl"></i>
+                <button onclick="closePlayer()" 
+                        class="text-xs bg-zinc-800 hover:bg-zinc-700 px-5 py-2 rounded-3xl">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-20 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-5 gap-y-12">
+            <div>
+                <div class="flex items-center gap-x-3 mb-6">
+                    <div class="w-9 h-9 bg-violet-600 rounded-2xl flex items-center justify-center text-3xl">🎤</div>
+                    <span class="text-3xl font-bold tracking-tighter">VocalWave</span>
+                </div>
+                <div class="text-xs text-zinc-500 max-w-xs">
+                    Professional music platform for listeners and independent singers. 
+                    Built with ❤️ in India.
+                </div>
+                <div class="mt-8 text-[10px] text-zinc-600">© 2026 VocalWave Pvt. Ltd.</div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-400">Platform</div>
+                <div class="space-y-3 text-sm">
+                    <div class="cursor-pointer hover:text-violet-300">Browse Music</div>
+                    <div class="cursor-pointer hover:text-violet-300">Live Rooms</div>
+                    <div class="cursor-pointer hover:text-violet-300">Charts</div>
+                    <div class="cursor-pointer hover:text-violet-300">AI Mastering</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-400">For Singers</div>
+                <div class="space-y-3 text-sm">
+                    <div class="cursor-pointer hover:text-violet-300">Upload Music</div>
+                    <div class="cursor-pointer hover:text-violet-300">Monetization</div>
+                    <div class="cursor-pointer hover:text-violet-300">Creator Dashboard</div>
+                    <div class="cursor-pointer hover:text-violet-300">Royalty Calculator</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-400">Company</div>
+                <div class="space-y-3 text-sm">
+                    <div class="cursor-pointer hover:text-violet-300">About Us</div>
+                    <div class="cursor-pointer hover:text-violet-300">Blog</div>
+                    <div class="cursor-pointer hover:text-violet-300">Careers</div>
+                    <div class="cursor-pointer hover:text-violet-300">Press</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase text-xs tracking-widest mb-6 text-zinc-400">Follow Us</div>
+                <div class="flex gap-x-6 text-2xl">
+                    <i class="fab fa-instagram cursor-pointer hover:text-pink-400"></i>
+                    <i class="fab fa-youtube cursor-pointer hover:text-red-400"></i>
+                    <i class="fab fa-twitter cursor-pointer hover:text-sky-400"></i>
+                </div>
+                
+                <div class="mt-10 text-xs">
+                    Made for creators in Delhi, Mumbai, Bangalore &amp; beyond.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" onclick="if(event.target.id==='loginModal')hideLoginModal()" 
+         class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[999]">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="bg-zinc-900 w-full max-w-md mx-4 rounded-3xl p-8">
+            <div class="flex justify-between mb-8">
+                <h3 class="text-3xl font-bold">Welcome back</h3>
+                <button onclick="hideLoginModal()" class="text-3xl">×</button>
+            </div>
+            
+            <input type="email" placeholder="Email or username" 
+                   class="w-full bg-zinc-800 border border-zinc-700 focus:border-violet-400 rounded-3xl px-6 py-6 text-lg outline-none mb-4">
+            
+            <input type="password" placeholder="Password" 
+                   class="w-full bg-zinc-800 border border-zinc-700 focus:border-violet-400 rounded-3xl px-6 py-6 text-lg outline-none mb-8">
+            
+            <button onclick="fakeLogin()" 
+                    class="w-full py-6 bg-white text-black font-bold text-xl rounded-3xl">LOG IN</button>
+            
+            <div class="text-center mt-8 text-sm text-zinc-400">
+                Don't have an account? 
+                <span onclick="hideLoginModal();showSignupModal()" class="text-violet-400 cursor-pointer">Sign up free</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP MODAL -->
+    <div id="signupModal" onclick="if(event.target.id==='signupModal')hideSignupModal()" 
+         class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[999]">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="bg-zinc-900 w-full max-w-md mx-4 rounded-3xl p-8">
+            <div class="flex justify-between mb-8">
+                <h3 class="text-3xl font-bold">Join VocalWave</h3>
+                <button onclick="hideSignupModal()" class="text-3xl">×</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <input type="text" placeholder="First name" class="bg-zinc-800 border border-zinc-700 rounded-3xl px-6 py-6 text-lg">
+                <input type="text" placeholder="Last name" class="bg-zinc-800 border border-zinc-700 rounded-3xl px-6 py-6 text-lg">
+            </div>
+            
+            <input type="email" placeholder="Email" class="w-full bg-zinc-800 border border-zinc-700 rounded-3xl px-6 py-6 text-lg mb-4">
+            
+            <div class="flex items-center gap-x-4 mb-8">
+                <select class="bg-zinc-800 border border-zinc-700 rounded-3xl px-6 py-6 text-lg w-full">
+                    <option>Listener</option>
+                    <option>Singer / Creator</option>
+                </select>
+            </div>
+            
+            <button onclick="fakeSignup()" 
+                    class="w-full py-6 bg-violet-600 hover:bg-violet-700 text-white font-bold text-xl rounded-3xl">
+                    CREATE FREE ACCOUNT
+            </button>
+            
+            <div class="text-[10px] text-center text-zinc-500 mt-8">
+                By signing up you agree to our Terms and Privacy Policy
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script run
+        function initializeTailwind() {
+            // Already initialized via CDN
+        }
+        
+        let currentSongIndex = 0;
+        const songs = [
+            { title: "Midnight Drive", artist: "Aarav Singh", duration: "3:42", art: "https://picsum.photos/id/1015/80/80" },
+            { title: "Ocean Eyes", artist: "Neha Sharma", duration: "4:18", art: "https://picsum.photos/id/201/80/80" },
+            { title: "Firefly", artist: "Rohan Patel", duration: "2:59", art: "https://picsum.photos/id/301/80/80" },
+            { title: "Echoes", artist: "Priya Kapoor", duration: "5:12", art: "https://picsum.photos/id/401/80/80" },
+            { title: "Rising Sun", artist: "Vikram Rao", duration: "3:27", art: "https://picsum.photos/id/501/80/80" }
+        ];
+        
+        let isPlaying = false;
+        let progressInterval = null;
+        
+        function playSong(index) {
+            currentSongIndex = index;
+            const player = document.getElementById('globalPlayer');
+            player.classList.remove('hidden');
+            
+            document.getElementById('playerTitle').textContent = songs[index].title;
+            document.getElementById('playerArtist').textContent = songs[index].artist;
+            document.getElementById('playerArt').src = songs[index].art;
+            
+            isPlaying = true;
+            document.getElementById('playIcon').classList.remove('fa-play');
+            document.getElementById('playIcon').classList.add('fa-pause');
+            
+            startProgressBar();
+        }
+        
+        function togglePlay() {
+            if (!document.getElementById('globalPlayer').classList.contains('hidden')) {
+                isPlaying = !isPlaying;
+                const icon = document.getElementById('playIcon');
+                
+                if (isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    startProgressBar();
+                } else {
+                    icon.classList.add('fa-play');
+                    icon.classList.remove('fa-pause');
+                    clearInterval(progressInterval);
+                }
+            }
+        }
+        
+        function startProgressBar() {
+            clearInterval(progressInterval);
+            let progress = 0;
+            const bar = document.getElementById('progressBar');
+            
+            progressInterval = setInterval(() => {
+                progress += 1.5;
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    nextSong();
+                    return;
+                }
+                bar.value = progress;
+            }, 80);
+        }
+        
+        function updateProgress(range) {
+            // Manual seek simulation
+        }
+        
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            playSong(currentSongIndex);
+        }
+        
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            playSong(currentSongIndex);
+        }
+        
+        function closePlayer() {
+            document.getElementById('globalPlayer').classList.add('hidden');
+            clearInterval(progressInterval);
+            isPlaying = false;
+        }
+        
+        function toggleLike() {
+            alert("❤️ Added to your Liked Songs");
+        }
+        
+        function scrollToSection(section) {
+            let el;
+            if (section === 'discover') el = document.getElementById('discover');
+            else if (section === 'sing') el = document.getElementById('sing');
+            else if (section === 'artists') el = document.getElementById('artists');
+            else if (section === 'community') el = document.getElementById('community');
+            
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+        }
+        
+        function hideLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function showSignupModal() {
+            document.getElementById('signupModal').classList.remove('hidden');
+            document.getElementById('signupModal').classList.add('flex');
+        }
+        
+        function hideSignupModal() {
+            const modal = document.getElementById('signupModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function fakeLogin() {
+            hideLoginModal();
+            alert("✅ Logged in successfully!\n\n(You are now a verified VocalWave user)");
+        }
+        
+        function fakeSignup() {
+            hideSignupModal();
+            alert("🎉 Welcome to VocalWave!\nYour account is ready. Start uploading or listening now.");
+        }
+        
+        function startRecordingDemo() {
+            alert("🎙️ Recording studio opened!\n\n(Your microphone is now live. Sing for 30 seconds and hit Upload to see the demo.)");
+        }
+        
+        function fakeRecordStop() {
+            alert("✅ Recording saved!\n\nYour track 'My First VocalWave Demo' is now in your private library.");
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === " " && !document.getElementById('globalPlayer').classList.contains('hidden')) {
+                e.preventDefault();
+                togglePlay();
+            }
+        });
+        
+        // Initialize everything
+        window.onload = function() {
+            console.log('%c✅ VocalWave Professional Website Ready!\nCopy this entire file and save as index.html', 'color:#a78bfa; font-size:13px');
+            
+            // Make all music cards clickable too
+            const cards = document.querySelectorAll('.music-card');
+            cards.forEach((card, i) => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    playSong(i % songs.length);
+                });
+            });
+        };
+    </script>
+</body>
+</html>
